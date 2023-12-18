@@ -9,7 +9,7 @@ Title: Snowglobe - Day 11 #3DInktober2019-Snow
 import { useFrame, useThree } from '@react-three/fiber'
 import { MeshTransmissionMaterial, useGLTF, useTexture, Text, Billboard, Text3D } from '@react-three/drei'
 import * as THREE from 'three'
-import { useMemo, useRef, useLayoutEffect, useState, useEffect } from 'react'
+import { useMemo, useRef, useLayoutEffect, useState, useEffect, memo } from 'react'
 import { easing } from 'maath'
 import gsap from 'gsap'
 import SnowFlakes from './SnowFlakes'
@@ -85,8 +85,17 @@ export default function SnowGlobeModel(props) {
   }, [insideMesh])
 
   return (
-    <group ref={groupRef} {...props} dispose={null}>
-      <mesh ref={snowGlobeRef} castShadow receiveShadow geometry={nodes.build_scenebuild_sceneSnow_Scene_Snow_Globe___Default1_0.geometry}>
+    <group
+      ref={groupRef}
+      {...props}
+      dispose={null}
+    >
+      <mesh
+        ref={snowGlobeRef}
+        castShadow
+        receiveShadow
+        geometry={nodes.build_scenebuild_sceneSnow_Scene_Snow_Globe___Default1_0.geometry}
+      >
         <MeshTransmissionMaterial
           backsideThickness={8}
           samples={4}
@@ -102,13 +111,31 @@ export default function SnowGlobeModel(props) {
           metalness={0.3}
         />
       </mesh>
-      <mesh ref={internalWorldRef} position={[0, 15, 0]}>
+
+      <mesh
+        ref={internalWorldRef}
+        position={[0, 15, 0]}
+      >
         <sphereGeometry args={[12.5, 24, 24]} />
-        <meshStandardMaterial map={texture} side={THREE.BackSide} envMapIntensity={3} />
+        <meshStandardMaterial
+          map={texture}
+          side={THREE.BackSide}
+          envMapIntensity={3}
+        />
         <FireWorks ref={fireWorksRef} />
       </mesh>
-      <mesh ref={snowGlobeRef2} castShadow receiveShadow geometry={nodes.build_scenebuild_sceneSnow_Scene_blinn1_0.geometry}>
-        <meshPhysicalMaterial metalness={0.2} roughness={0.2} color={'grey'} envMapIntensity={2} />
+      <mesh
+        ref={snowGlobeRef2}
+        castShadow
+        receiveShadow
+        geometry={nodes.build_scenebuild_sceneSnow_Scene_blinn1_0.geometry}
+      >
+        <meshPhysicalMaterial
+          metalness={0.2}
+          roughness={0.2}
+          color={'grey'}
+          envMapIntensity={2}
+        />
         <SnowFlakes count={2000} />
       </mesh>
       {!props.isMobile && <LumaWorld visible={insideMesh} />}
@@ -121,18 +148,45 @@ useGLTF.preload('/snowglobe-transformed.glb')
 function Texts() {
   return (
     <>
-      <Text3D letterSpacing={0.06} size={0.3} font="/Inter_Bold.json" position={[-2.8, 3.3, 10]}>
+      <Text3D
+        letterSpacing={0.06}
+        size={0.3}
+        font='/Inter_Bold.json'
+        position={[-2.8, 3.3, 10]}
+      >
         ANDERSON MANCINI
-        <meshPhysicalMaterial metalness={0.2} roughness={0.2} color={'#a1a1a1'} />
+        <meshPhysicalMaterial
+          metalness={0.2}
+          roughness={0.2}
+          color={'#a1a1a1'}
+        />
       </Text3D>
       <Billboard>
-        <Text font="/DancingScript-VariableFont_wght.ttf" maxWidth={3.5} textAlign="center" position={[0, 12.45, 0]} fontSize="0.35" lineHeight={0.85}>
+        <Text
+          font='/DancingScript-VariableFont_wght.ttf'
+          maxWidth={3.5}
+          textAlign='center'
+          position={[0, 12.45, 0]}
+          fontSize='0.35'
+          lineHeight={0.85}
+        >
           Wishing you a restful holiday season. {'\n\n'}May your Christmas be blessed with lots of love, peace, and happiness.
         </Text>
-        <Text maxWidth={2.5} textAlign="center" position={[0, 11.2, 0]} fillOpacity={0.6} fontSize="0.1">
+        <Text
+          maxWidth={2.5}
+          textAlign='center'
+          position={[0, 11.2, 0]}
+          fillOpacity={0.6}
+          fontSize='0.1'
+        >
           I will be on vacation until January 8th. Thank you for all your support in 2023. Great things are coming in 2024. Please stay tunned.
         </Text>
-        <Text maxWidth={1.5} textAlign="center" position={[0, 10.8, 0]} fontSize="0.08">
+        <Text
+          maxWidth={1.5}
+          textAlign='center'
+          position={[0, 10.8, 0]}
+          fontSize='0.08'
+        >
           Anderson Mancini
         </Text>
       </Billboard>
